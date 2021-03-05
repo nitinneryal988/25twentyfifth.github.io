@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<style>
+	* {
+		padding:0;
+		margin:0;
+		box-sizing:border-box;
+	}
+	.mainDiv  {
+          width:100%;
+          height:100vh;
+          position:relative;
+          background:#3498Db;
+}
+.centerDiv  {
+       position:absolute;
+       top:50%;
+       left:50%;
+       transform:translate(-50% ,-50%);
+       text-align:center;
+   }
+   h1 {
+   	text-transform:capitalize;
+   	text-align:center;
+   	margin-bottom:30px;
+   	color:#ecf0f1;
+   	text-shadow:1px 2px 3px #2980b9;
+   	font-size:2.1rem;
+ }
+   h2 { 
+     text-align:center;
+   }
+   textarea  {
+   	  background:#444;
+   	  box-shadow:0 0 1px rgba(0,0,0,0.5) ;
+   	  border-radius:10px 10px 0 0;
+   	  border:20px solid #34495e;
+   	  font-size:1.3rem;
+   	  color: white;
+}
+    .mainbtn  {
+        padding:10px 20px;
+        border-radius:20px;
+        border:5px solid #2980b9;
+        background:#ecf0f1;
+        font-size:1rem;
+}
+
+
+</style>
+<body>
+	<div class="mainDiv">
+		<div class="centerDiv">
+			<h1>Welcome to typing speed test</h1>
+			<h2 id="msg">  </h2>
+			<br>
+			<textarea id="mywords" cols="100"  rows="10" placeholder=" remember , be nice !"> </textarea>
+             <br>
+            <button id="btn" class="mainbtn">Start</button>
+        </div>
+    </div>
+    <script>
+    	const setOfWords = [  "kai sallon se bas kagzon pe bikhari siyahai mane " ,
+    	"rejectons taunts or tane  na di safai mane majboor passon ke beech na layai mane"  ,
+"m keeping it real bro likhai or boli sachai mane" ,"guthno pe ayai mari" ,
+"lagi the life ki but soch high maeri..." ,
+"i tried to dig it deep in shabdon mae gahrai ha bro there is no vaceen for the virus i cought" ,
+"m talking about my life shabdon me zindgi suna raha mee.. i do it from the heart, art hip-hop zindgi ka sahara ha" ,
+   ];
+   const msg = document.getElementById("msg");
+   const typeWords= document.getElementById("mywords");
+   const btn = document.getElementById('btn');
+   let startTime , endTime;
+
+  const playGame = () => {
+      let randomNumber = Math.floor(Math.random()*setOfWords.length);
+      msg.innerText = setOfWords[randomNumber];
+      let date = new Date()
+      startTime = date.getTime();
+      btn.innerText = "Done"
+}
+  const endPlay = () =>  {
+  	 let date = new Date()
+      endTime = date.getTime();
+      let totalTime= ((endTime - startTime)/1000);
+      console.log(totalTime);
+
+      let totalStr = typeWords.value;
+      let wordCount = wordCounter(totalStr);
+
+
+      let speed =Math.round((wordCount / totalTime)*60);
+
+      let finalMsg = " you typed total " + speed + " words per minut ";
+
+        finalMsg += compairWords(msg.innerText,totalStr);
+      msg.innerText = finalMsg;
+  }
+  const compairWords = (str1,str2) => {
+  	let words1 = str1.split("");
+  	let words2 = str2.split("");
+  	let cnt = 0;
+
+  	words1.forEach(function (item,index)   {
+    if(item == words2[index]) {
+    	cnt++;
+    }
+})
+  	let errorWords = (words1.length - cnt );
+  	    return(cnt + "  correct out of " + words1.length + "  words and the total number of the errors are " + errorWords +"." )
+
+ }
+
+        const wordCounter = (str) =>  {
+               let response = str.split("").length;
+               console.log(response);
+               return(response);
+            
+
+
+        }
+
+
+
+   btn.addEventListener('click', function(){
+   	 if(this.innerText == "Start") {
+           typeWords.disabled = false;
+           playGame();
+   	 }else {
+   	 	if(this.innerText == "Done")  {
+   	 		typeWords.disabled = "true";
+   	 		btn.innerText = "Start"
+   	 		endPlay();
+   	 	}
+   	 }
+
+
+   })
+
+   
+    	
+
+
+
+
+
+    </script>
+</body>
+</html>
